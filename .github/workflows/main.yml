@@ -46,19 +46,18 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-        cache-dependency-path: './package-lock.json'
+        cache: 'yarn'
 
     - name: 📦 Install dependencies
       run: |
-        echo "📦 Installing npm dependencies..."
-        npm ci --prefer-offline --no-audit
+        echo "📦 Installing yarn dependencies..."
+        yarn install --frozen-lockfile
 
     - name: 🧪 Run tests (if available)
       run: |
-        if npm run | grep -q "test"; then
+        if yarn run | grep -q "test"; then
           echo "🧪 Running tests..."
-          npm run test -- --coverage --watchAll=false
+          yarn test --coverage --watchAll=false
         else
           echo "⚠️ No tests found, skipping..."
         fi
@@ -69,7 +68,7 @@ jobs:
         GENERATE_SOURCEMAP: false
       run: |
         echo "🏗️ Building React application..."
-        npm run build
+        yarn build
 
     - name: 📋 Verify build output
       run: |
