@@ -3,33 +3,39 @@
 export const portfolioProjects = [
   {
     id: 1,
-    title: "Enterprise E-Commerce Platform",
+    title: "Vault9",
     category: "Web Development",
-    description: "Full-scale e-commerce solution with advanced inventory management and analytics dashboard",
-    tech: ["React", "Node.js", "MongoDB", "Stripe"],
+    description: "Elegant perfumery e-commerce platform with premium design and seamless user experience",
+    tech: ["React", "Vite", "TailwindCSS", "Node.js"],
     year: 2024,
-    image: "https://images.unsplash.com/photo-1649451844931-57e22fc82de3",
-    client: "RetailCorp Indonesia"
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCKd1rszDklsqBP9aDshO00nWs50hGeQFFVg&s",
+    client: "Vault9 Perfumery",
+    link: "https://vault9.base44.app",
+    status: "deployed"
   },
   {
     id: 2,
+    title: "Futsalin Mobile App",
+    category: "Mobile App Development",
+    description: "Futsalin is a mobile app designed for futsal players, teams, and field owners. It helps you find futsal courts, organize matches, manage teams, and connect with other players nearby — all in one platform.",
+    tech: ["Flutter", "Supabase", "Google OAuth"],
+    year: 2025,
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCKd1rszDklsqBP9aDshO00nWs50hGeQFFVg&s",
+    client: "Futsalin",
+    link: null,
+    status: "in-development"
+  },
+  {
+    id: 3,
     title: "FinTech Mobile Application",
     category: "App Development",
     description: "Secure banking app with real-time transactions and AI-powered insights",
     tech: ["React Native", "Firebase", "TensorFlow"],
     year: 2024,
     image: "https://images.unsplash.com/photo-1658953229625-aad99d7603b4",
-    client: "Digital Bank Asia"
-  },
-  {
-    id: 3,
-    title: "Healthcare Dashboard System",
-    category: "UI/UX Design",
-    description: "Intuitive patient management system with real-time monitoring and scheduling",
-    tech: ["Figma", "React", "Material-UI"],
-    year: 2023,
-    image: "https://images.unsplash.com/photo-1618761714954-0b8cd0026356",
-    client: "MediCare Solutions"
+    client: "Digital Bank Asia",
+    link: null,
+    status: "in-development"
   }
 ];
 

@@ -1,0 +1,61 @@
+name: Deploy with Azure Developer CLI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'temuin-website/**'
+      - 'temuin-infra/web/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_ENV_NAME: 'temuin-prod'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🚀 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+        cache-dependency-path: './temuin-website/package-lock.json'
+
+    - name: 📦 Install Azure Developer CLI
+      uses: Azure/setup-azd@v1.0.0
+
+    - name: 🔐 Azure Login
+      uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: 🏗️ Build and Deploy with azd
+      working-directory: ./temuin-infra/web
+      env:
+        AZURE_ENV_NAME: ${{ env.AZURE_ENV_NAME }}
+        AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      run: |
+        # Copy website source to infrastructure directory
+        cp -r ../../temuin-website/* .
+        
+        # Initialize azd environment if it doesn't exist
+        if [ ! -f .azure/${{ env.AZURE_ENV_NAME }}/.env ]; then
+          azd init --environment ${{ env.AZURE_ENV_NAME }} --location ${{ secrets.AZURE_LOCATION }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        fi
+        
+        # Deploy the application
+        azd deploy --environment ${{ env.AZURE_ENV_NAME }}
+
+    - name: 🧹 Cleanup
+      run: |
+        az logout

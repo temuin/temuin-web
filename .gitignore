@@ -1,4 +1,6 @@
 contracts.md
+.github/README.md
+*secrets*
 
 # Dependencies
 node_modules/
@@ -18,6 +20,12 @@ dist/
 .env.test.local
 .env.production.local
 *.config*
+
+# Deployment secrets
+DEPLOYMENT-SECRETS.txt
+.github/github-secrets.txt
+deployment-secrets.*
+azure-credentials.*
 
 # IDE and editor files
 .vscode/

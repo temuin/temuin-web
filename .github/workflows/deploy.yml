@@ -1,0 +1,65 @@
+name: Deploy Temuin Website to Azure
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'temuin-website/**'
+      - 'temuin-infra/web/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'temuin-website/**'
+      - 'temuin-infra/web/**'
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: 'temuin-website'
+  AZURE_WEBAPP_PACKAGE_PATH: './temuin-website'
+  NODE_VERSION: '18.x'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🚀 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: './temuin-website/package-lock.json'
+
+    - name: 📦 Install dependencies
+      working-directory: ./temuin-website
+      run: |
+        npm ci
+
+    - name: 🏗️ Build React application
+      working-directory: ./temuin-website
+      run: |
+        npm run build
+
+    - name: 📋 List build contents
+      working-directory: ./temuin-website
+      run: |
+        echo "Build directory contents:"
+        ls -la build/
+
+    - name: 🔐 Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: 📱 Deploy to Azure App Service
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+        package: ./temuin-website/build
+
+    - name: 🧹 Azure logout
+      run: |
+        az logout

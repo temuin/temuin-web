@@ -7,6 +7,12 @@ import { portfolioProjects } from '../data/mock';
 const Portfolio = ({ darkMode }) => {
   const [hoveredId, setHoveredId] = useState(null);
 
+  const handleProjectClick = (project) => {
+    if (project.link && project.status === 'deployed') {
+      window.open(project.link, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <section
       id="portfolio"
@@ -36,9 +42,14 @@ const Portfolio = ({ darkMode }) => {
           {portfolioProjects.map((project) => (
             <Card
               key={project.id}
+              onClick={() => handleProjectClick(project)}
               onMouseEnter={() => setHoveredId(project.id)}
               onMouseLeave={() => setHoveredId(null)}
-              className={`group overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 ${
+              className={`group overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 ${
+                project.status === 'deployed' 
+                  ? 'cursor-pointer' 
+                  : 'cursor-default'
+              } ${
                 darkMode
                   ? 'bg-gray-900 border-gray-800 hover:border-cyan-400 hover:shadow-cyan-400/20'
                   : 'bg-white border-gray-200 hover:border-cyan-400 hover:shadow-cyan-400/20'
@@ -51,6 +62,18 @@ const Portfolio = ({ darkMode }) => {
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
+                {/* Status Badge */}
+                <div className="absolute top-4 right-4">
+                  <Badge
+                    className={`text-xs font-medium ${
+                      project.status === 'deployed'
+                        ? 'bg-green-500/90 text-white hover:bg-green-600/90'
+                        : 'bg-yellow-500/90 text-white hover:bg-yellow-600/90'
+                    }`}
+                  >
+                    {project.status === 'deployed' ? 'Live' : 'In Development'}
+                  </Badge>
+                </div>
                 <div
                   className={`absolute inset-0 transition-opacity duration-300 ${
                     hoveredId === project.id
@@ -65,7 +88,19 @@ const Portfolio = ({ darkMode }) => {
                       : 'opacity-0'
                   }`}
                 >
-                  <ExternalLink className="h-12 w-12 text-white" />
+                  {project.status === 'deployed' ? (
+                    <div className="text-center">
+                      <ExternalLink className="h-12 w-12 text-white mx-auto mb-2" />
+                      <p className="text-white font-medium">Visit Site</p>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <div className="h-12 w-12 mx-auto mb-2 rounded-full border-2 border-white flex items-center justify-center">
+                        <div className="h-6 w-6 rounded-full border-t-2 border-white animate-spin"></div>
+                      </div>
+                      <p className="text-white font-medium">Coming Soon</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -110,11 +145,16 @@ const Portfolio = ({ darkMode }) => {
                 </div>
 
                 <div
-                  className={`text-sm pt-2 border-t ${
+                  className={`text-sm pt-2 border-t flex items-center justify-between ${
                     darkMode ? 'border-gray-800 text-gray-500' : 'border-gray-200 text-gray-500'
                   }`}
                 >
-                  {project.client} • {project.year}
+                  <span>{project.client} • {project.year}</span>
+                  {project.status === 'deployed' && project.link && (
+                    <span className="text-cyan-400 font-medium text-xs">
+                      Click to visit →
+                    </span>
+                  )}
                 </div>
               </div>
             </Card>

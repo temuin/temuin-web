@@ -1,0 +1,51 @@
+{
+  "name": "temuin-portfolio-deployment",
+  "version": "1.0.0",
+  "description": "GitHub Actions deployment configuration for Temuin Portfolio",
+  "azure": {
+    "resourceGroup": "rg-temuin",
+    "location": "southeastasia",
+    "appServicePlan": "Basic (B1)",
+    "runtime": "Node.js 18.x"
+  },
+  "github": {
+    "repository": "https://github.com/temuin/temuin-web",
+    "workflows": [
+      {
+        "name": "main.yml",
+        "description": "Complete CI/CD pipeline with build, test, deploy, and health check",
+        "triggers": ["push to main", "manual dispatch"],
+        "recommended": true
+      },
+      {
+        "name": "deploy.yml", 
+        "description": "Simple build and deploy workflow",
+        "triggers": ["push to main", "pull request to main"]
+      },
+      {
+        "name": "deploy-azd.yml",
+        "description": "Azure Developer CLI based deployment",
+        "triggers": ["push to main", "manual dispatch"]
+      }
+    ]
+  },
+  "setup": {
+    "steps": [
+      "1. Run setup-azure.sh to create service principal",
+      "2. Add GitHub secrets from script output", 
+      "3. Commit and push workflow files",
+      "4. Watch automatic deployment in GitHub Actions"
+    ],
+    "secrets_required": [
+      "AZURE_CREDENTIALS",
+      "AZURE_WEBAPP_NAME", 
+      "AZURE_SUBSCRIPTION_ID",
+      "AZURE_LOCATION"
+    ]
+  },
+  "monitoring": {
+    "github_actions": "https://github.com/temuin/temuin-web/actions",
+    "azure_portal": "https://portal.azure.com",
+    "deployment_logs": "App Service → Deployment Center → Logs"
+  }
+}
