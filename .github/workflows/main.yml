@@ -28,7 +28,7 @@ on:
         - staging
 
 env:
-  NODE_VERSION: '18.x'
+  NODE_VERSION: '20.x'
   AZURE_WEBAPP_PACKAGE_PATH: '.'
 
 jobs:
