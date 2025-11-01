@@ -7,7 +7,11 @@ on:
       - 'src/**'
       - 'public/**'
       - 'package.json'
-      - 'package-lock.json'
+      - 'yarn.lock'
+      - 'craco.config.js'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
+      - '.gitignore'
       - '.github/workflows/**'
   pull_request:
     branches: [ main ]
@@ -15,7 +19,10 @@ on:
       - 'src/**'
       - 'public/**'
       - 'package.json'
-      - 'package-lock.json'
+      - 'yarn.lock'
+      - 'craco.config.js'
+      - 'tailwind.config.js'
+      - 'postcss.config.js'
   workflow_dispatch:
     inputs:
       environment:
