@@ -4,18 +4,22 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'temuin-website/**'
-      - 'temuin-infra/web/**'
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
   pull_request:
     branches: [ main ]
     paths:
-      - 'temuin-website/**'
-      - 'temuin-infra/web/**'
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
   workflow_dispatch:
 
 env:
   AZURE_WEBAPP_NAME: 'temuin-website'
-  AZURE_WEBAPP_PACKAGE_PATH: './temuin-website'
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
   NODE_VERSION: '18.x'
 
 jobs:
@@ -31,20 +35,17 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: './temuin-website/package-lock.json'
+        cache-dependency-path: './package-lock.json'
 
     - name: 📦 Install dependencies
-      working-directory: ./temuin-website
       run: |
         npm ci
 
     - name: 🏗️ Build React application
-      working-directory: ./temuin-website
       run: |
         npm run build
 
     - name: 📋 List build contents
-      working-directory: ./temuin-website
       run: |
         echo "Build directory contents:"
         ls -la build/
@@ -58,7 +59,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-        package: ./temuin-website/build
+        package: ./build
 
     - name: 🧹 Azure logout
       run: |

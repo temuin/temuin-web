@@ -4,14 +4,18 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - 'temuin-website/**'
-      - 'temuin-infra/web/**'
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/**'
   pull_request:
     branches: [ main ]
     paths:
-      - 'temuin-website/**'
-      - 'temuin-infra/web/**'
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
   workflow_dispatch:
     inputs:
       environment:
@@ -25,7 +29,7 @@ on:
 
 env:
   NODE_VERSION: '18.x'
-  AZURE_WEBAPP_PACKAGE_PATH: './temuin-website'
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
 
 jobs:
   build:
@@ -43,16 +47,14 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-        cache-dependency-path: './temuin-website/package-lock.json'
+        cache-dependency-path: './package-lock.json'
 
     - name: 📦 Install dependencies
-      working-directory: ./temuin-website
       run: |
         echo "📦 Installing npm dependencies..."
         npm ci --prefer-offline --no-audit
 
     - name: 🧪 Run tests (if available)
-      working-directory: ./temuin-website
       run: |
         if npm run | grep -q "test"; then
           echo "🧪 Running tests..."
@@ -62,7 +64,6 @@ jobs:
         fi
 
     - name: 🏗️ Build React application
-      working-directory: ./temuin-website
       env:
         CI: false
         GENERATE_SOURCEMAP: false
@@ -71,7 +72,6 @@ jobs:
         npm run build
 
     - name: 📋 Verify build output
-      working-directory: ./temuin-website
       run: |
         echo "📋 Build directory contents:"
         ls -la build/
@@ -84,7 +84,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: react-build
-        path: ./temuin-website/build/
+        path: ./build/
         retention-days: 1
 
   deploy:
