@@ -9,32 +9,32 @@ export const portfolioProjects = [
     description: "Elegant perfumery e-commerce platform with premium design and seamless user experience",
     tech: ["React", "Vite", "TailwindCSS", "Node.js"],
     year: 2024,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCKd1rszDklsqBP9aDshO00nWs50hGeQFFVg&s",
+    image: "https://image2url.com/images/1761995696516-95d78e02-2736-4f71-868e-342b9bdb2d23.png",
     client: "Vault9 Perfumery",
     link: "https://vault9.base44.app",
     status: "deployed"
   },
   {
     id: 2,
+    title: "V Golf and Cafe Website",
+    category: "Web Development",
+    description: "V Golf and Cafe is a web of V Golf and Cafe business that offers a unique blend of golfing experience and cafe delights, providing customers with a relaxing environment to enjoy both activities.",
+    tech: ["React", "Node.js", "Express", "MongoDB"],
+    year: 2025,
+    image: "https://image2url.com/images/1761995601108-450f8662-711b-40f5-8b9f-51f0ff9eed7b.jpg",
+    client: "V Golf and Cafe",
+    link: "https://tee-and-coffee.preview.emergentagent.com/",
+    status: "deployed"
+  },
+  {
+    id: 3,
     title: "Futsalin Mobile App",
     category: "Mobile App Development",
     description: "Futsalin is a mobile app designed for futsal players, teams, and field owners. It helps you find futsal courts, organize matches, manage teams, and connect with other players nearby — all in one platform.",
     tech: ["Flutter", "Supabase", "Google OAuth"],
     year: 2025,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCKd1rszDklsqBP9aDshO00nWs50hGeQFFVg&s",
+    image: "https://image2url.com/images/1761995601108-450f8662-711b-40f5-8b9f-51f0ff9eed7b.jpg",
     client: "Futsalin",
-    link: null,
-    status: "in-development"
-  },
-  {
-    id: 3,
-    title: "FinTech Mobile Application",
-    category: "App Development",
-    description: "Secure banking app with real-time transactions and AI-powered insights",
-    tech: ["React Native", "Firebase", "TensorFlow"],
-    year: 2024,
-    image: "https://images.unsplash.com/photo-1658953229625-aad99d7603b4",
-    client: "Digital Bank Asia",
     link: null,
     status: "in-development"
   }
