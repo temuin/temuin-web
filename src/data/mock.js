@@ -21,9 +21,9 @@ export const portfolioProjects = [
     description: "V Golf and Cafe is a web of V Golf and Cafe business that offers a unique blend of golfing experience and cafe delights, providing customers with a relaxing environment to enjoy both activities.",
     tech: ["React", "Node.js", "Express", "MongoDB"],
     year: 2025,
-    image: "https://image2url.com/images/1761995601108-450f8662-711b-40f5-8b9f-51f0ff9eed7b.jpg",
+    image: "https://image2url.com/images/1761999727339-86392721-1267-4324-bb6a-67fcaa2622ce.jpg",
     client: "V Golf and Cafe",
-    link: "https://tee-and-coffee.preview.emergentagent.com/",
+    link: "https://vgolfcafe.temuin.live/",
     status: "deployed"
   },
   {
